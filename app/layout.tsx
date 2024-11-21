@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { LayoutHome } from "@/features/home/components/layout-home";
+import { AdSense } from "@/features/home/components/adsense";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <AdSense
+          pid="ca-pub-1635010729840024"
+        />
+      </head>
       <body
         className={""} >
         <LayoutHome>

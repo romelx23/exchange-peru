@@ -9,6 +9,7 @@ import {
   getTkambioRates,
 } from "@/actions/exchange/exchange";
 import CustomButton from "@/features/common/components/button-custom";
+import { AdBanner } from "@/features/home/components/adbanner";
 // import CustomCard from "@/features/common/components/card-custom";
 // import { TabContent } from "@/features/home/components/tab-content";
 
@@ -100,6 +101,16 @@ export default async function Home() {
     },
   ];
 
+  // funcion que calcula el mejor tipo de cambio del día	
+  const bestRate = ListEntities.reduce((prev, current) => {
+    if (prev.data?.compra && current.data?.compra) {
+      return prev.data.compra > current.data.compra ? prev : current;
+    }
+    return prev;
+  });
+
+  console.log({ bestRate });
+
   return (
     <div className="flex items-center flex-col min-h-screen">
       <main className="flex-1 w-full px-2">
@@ -115,6 +126,33 @@ export default async function Home() {
                 A continuación, se muestra el tipo de cambio de las principales
                 casas de cambio del Perú.
               </p>
+
+              {/* banner que muestra el mejor tipo de camnbio */}
+
+              <div className="w-full max-w-3xl mx-auto flex flex-col gap-2 p-2 bg-white dark:bg-gradient-to-r dark:from-slate-600 dark:to-gray-800 dark:text-white rounded-lg shadow-md">
+                <h2 className="text-xl font-bold">Mejor tipo de cambio del día</h2>
+                <div className="flex justify-between">
+                  <span>{bestRate.label}</span>
+                  <span>{bestRate.data?.compra}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Venta</span>
+                  <span>{bestRate.data?.venta}</span>
+                </div>
+                <a
+                  href={bestRate.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block text-blue-500 hover:underline"
+                >
+                  Ver más
+                </a>
+              </div>
+              <AdBanner
+                dataAdSlot="5730485238"
+                dataAdFormat="auto"
+                dataFullWidthResponsive={true}
+              />
 
               <div className="w-full max-w-5xl flex flex-wrap gap-3">
                 {ListEntities.map((entity) => (
@@ -146,6 +184,13 @@ export default async function Home() {
                   </div>
                 ))}
               </div>
+
+              <AdBanner
+                dataAdSlot="5730485238"
+                dataAdFormat="auto"
+                dataFullWidthResponsive={true}
+              />
+
             </div>
           </div>
         </section>
